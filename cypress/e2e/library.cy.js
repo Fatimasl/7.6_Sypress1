@@ -26,7 +26,7 @@ describe('Repeat after lector', () => {
 
   
   
-  it.only("Добавление книги в библиотеку", () => {
+  it.only("Добавление книги в Избранное", () => {
    
     cy.login("bropet@mail.ru", "123");
     cy.contains("Добро пожаловать bropet@mail.ru").should("be.visible", true);
@@ -36,7 +36,7 @@ describe('Repeat after lector', () => {
     //cy.contains("Submit").click();
     let expectedLength;
     cy.definedLength(".btn-success", expectedLength);
-    cy.get(".btn.btn-success").should("have.length", expectedLength); 
+    cy.get(".btn-success").should("have.length", expectedLength); 
             
   });
 
