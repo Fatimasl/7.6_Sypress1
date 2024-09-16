@@ -17,3 +17,6 @@
 5. Если --headed не указывать, то отображения тестирования не будет. Можно явно указать --headless (отображение тестирования в браузере происходить не будет)
 6. Запуск тестирования возможен с помощью скриптов, прописанных в packege.json. Тогда запуск скрипта должен выглядеть так:
    - npm run test_chrome_headed
+   - npm run test_chrome_headless
+   - npm run test_firefox_headed
+   - npm run test_edge_headed
