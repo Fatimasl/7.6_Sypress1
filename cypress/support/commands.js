@@ -19,35 +19,45 @@ Cypress.Commands.add('login', (email, password) => {
     cy.contains("Submit").click();
 })
 
- Cypress.Commands.add("generateTitleAuthor", (length) => {
-   let title = ""; //здесь будем хранить результат
-   let author = "";
-   let chars =
+Cypress.Commands.add("generateTitleAuthor", (length) => {
+    let name = "";
+    let chars =
      "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЧЦЪЫЬЭЮЯабвгдеёжзиёклмнопрстуфхчцъыьэюя 1234567890"; //возможные символы
-   let charLength = chars.length; //определяем длину
-   for (let i = 0; i < length; i++) {
-     //запускаем цикл для формирования строки
-     title += chars.charAt(Math.floor(Math.random() * charLength));
-     author += chars.charAt(Math.floor(Math.random() * charLength));
-   }
+    let charLength = chars.length; //определяем длину
+    for (let i = 0; i < length; i++) {
+      //запускаем цикл для формирования строки
+      name += chars.charAt(Math.floor(Math.random() * charLength));
+    }
+    return name;
+ });
+
+
+  Cypress.Commands.add("addNewBook", (title, author, addToFavorite) => {
+   
+   cy.contains("Add new").click();
    cy.get("#title").type(title);
    cy.get("#authors").type(author);
+   if (addToFavorite) {
+        cy.get("#favorite").click();
+   };
+   cy.contains("Submit").click();
  });
 
- 
-
- Cypress.Commands.add("definedLength", (selector, expectedLength) => {
-   //вариант 1
-   //expectedLength = cy.get(selector).then((elements) => {elements.length});
-
-   //вариант 2
-   let totalCount;
-   cy.get(selector).then((value, totalCount) => {
-     totalCount = Cypress.$(value).length;
-     expect(value).to.have.length(totalCount);
+ Cypress.Commands.add("compareCollectionsLengthAfterAddingToFavorite", (selector) => {
+    cy.get(selector).then((value) => {
+        let totalCount = Cypress.$(value).length;
+        cy.get(selector).first().click();
+        cy.get(selector).should("have.length", totalCount - 1); 
    });
-   expectedLength = totalCount;
  });
+ 
+ Cypress.Commands.add("compareCollectionsLengthAfterRemovingFromFavorite", (selector) => {
+    cy.get(selector).then((value) => {
+        let totalCount = Cypress.$(value).length;
+        cy.get(selector).first().click();
+        cy.get(selector).should("have.length", totalCount - 1); 
+   });
+});
 //
 //
 // -- This is a child command --
